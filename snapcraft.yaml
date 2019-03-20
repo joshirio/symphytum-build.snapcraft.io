@@ -33,10 +33,6 @@ plugs: # additional plugs to pick up the GTK theme and icons from the system, mo
     interface: content
     target: $SNAP/share/themes
     default-provider: gtk2-common-themes:gtk-2-themes
-  icon-themes:
-    interface: content
-    target: $SNAP/share/icons
-    default-provider: gtk-common-themes:icon-themes
 
 environment:
   GTK_PATH: $SNAP/lib/gtk-2.0
