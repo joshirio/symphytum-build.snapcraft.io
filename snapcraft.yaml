@@ -13,10 +13,6 @@ confinement: strict
 base: core18 # based on ubuntu 18.04 LTS
 
 plugs: # additional plugs to pick up the GTK theme and icons from the system
-  gtk-3-themes:
-    interface: content
-    target: $SNAP/data-dir/themes
-    default-provider: gtk-common-themes
   icon-themes:
     interface: content
     target: $SNAP/data-dir/icons
@@ -90,7 +86,11 @@ parts:
       - qtwayland5
       - zlib1g
       - dbus
-      - qt5-style-plugins # for gtk2 style
+      # for gtk2 style
+      - qt5-style-plugins 
+      - libcanberra-gtk-module
+      - libatk-adaptor
+      - libgail-common
     after: [desktop-qt5]
     
   dropbox-sync:
