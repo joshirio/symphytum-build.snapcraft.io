@@ -25,6 +25,24 @@ plugs: # additional plugs to pick up the GTK theme and icons from the system, mo
     interface: content
     target: $SNAP/data-dir/sounds
     default-provider: gtk-common-themes
+  gtk-2-engines:
+    interface: content
+    target: $SNAP/lib/gtk-2.0
+    default-provider: gtk2-common-themes:gtk-2-engines
+  gtk-2-themes:
+    interface: content
+    target: $SNAP/share/themes
+    default-provider: gtk2-common-themes:gtk-2-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/share/icons
+    default-provider: gtk-common-themes:icon-themes
+
+environment:
+  GTK_PATH: $SNAP/lib/gtk-2.0
+  GTK_DATA_PREFIX: $SNAP
+  XDG_DATA_DIRS: $SNAP/share:$XDG_DATA_DIRS
+  QT_QPA_PLATFORMTHEME: gtk2 # set default theme to gtk to integrate with system theme (GTK2)
 
 apps:
   symphytum:
@@ -126,6 +144,7 @@ parts:
       - qtbase5-dev
       - dpkg-dev
     stage-packages:
+      - qt5-style-plugins # for gtk2 style
       - libxkbcommon0
       - ttf-ubuntu-font-family
       - dmz-cursor-theme
