@@ -42,7 +42,7 @@ environment:
 
 apps:
   symphytum:
-    command: desktop-launch symphytum
+    command: desktop-launch symphytum -style gtk2
     desktop: usr/share/applications/symphytum.desktop
     environment:
       DISABLE_WAYLAND: 1 # disable wayland (not ready yet), comment out this line to enable full wayland support
