@@ -38,11 +38,11 @@ environment:
   GTK_PATH: $SNAP/lib/gtk-2.0
   GTK_DATA_PREFIX: $SNAP
   XDG_DATA_DIRS: $SNAP/share:$XDG_DATA_DIRS
-  QT_QPA_PLATFORMTHEME: gtk2 # set default theme to gtk to integrate with system theme (GTK2)
+  QT_QPA_PLATFORMTHEME: gnome # set default theme to gtk to integrate with system theme (GTK2)
 
 apps:
   symphytum:
-    command: desktop-launch symphytum -style gtk2
+    command: desktop-launch symphytum -style gnome
     desktop: usr/share/applications/symphytum.desktop
     environment:
       DISABLE_WAYLAND: 1 # disable wayland (not ready yet), comment out this line to enable full wayland support
@@ -91,6 +91,15 @@ parts:
       - zlib1g
       - dbus
       - qt5-style-plugins # for gtk2 style
+    after: [desktop-qt5]
+
+  qgnomeplatform:
+    source: https://github.com/FedoraQt/QGnomePlatform.git
+    plugin: qmake
+    qt-version: qt5
+    build-packages:
+      - libqt5svg5-dev #??
+      - qtbase5-dev
     after: [desktop-qt5]
     
   dropbox-sync:
