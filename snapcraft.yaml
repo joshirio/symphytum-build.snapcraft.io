@@ -12,12 +12,27 @@ grade: stable
 confinement: strict
 base: core18 # based on ubuntu 18.04 LTS
 
+plugs: # additional plugs to pick up the GTK theme and icons from the system, mouse cursor theme still not fixed
+  gtk-3-themes:
+    interface: content
+    target: $SNAP/data-dir/themes
+    default-provider: gtk-common-themes
+  icon-themes:
+    interface: content
+    target: $SNAP/data-dir/icons
+    default-provider: gtk-common-themes
+  sound-themes:
+    interface: content
+    target: $SNAP/data-dir/sounds
+    default-provider: gtk-common-themes
+
 apps:
   symphytum:
     command: desktop-launch symphytum
     desktop: usr/share/applications/symphytum.desktop
     environment:
       DISABLE_WAYLAND: 1 # disable wayland (not ready yet), comment out this line to enable full wayland support
+      QT_QPA_PLATFORMTHEME: gtk2 # set default theme to gtk to integrate with system theme (GTK2)
     plugs:
       - home
       - network
@@ -61,6 +76,7 @@ parts:
       - qtwayland5
       - zlib1g
       - dbus
+      - qt5-style-plugins # for gtk2 style
     after: [desktop-qt5]
     
   dropbox-sync:
