@@ -12,7 +12,7 @@ grade: stable
 confinement: strict
 base: core18 # based on ubuntu 18.04 LTS
 
-plugs: # additional plugs to pick up the GTK theme and icons from the system, mouse cursor theme still not fixed
+plugs: # additional plugs to pick up the GTK theme and icons from the system
   gtk-3-themes:
     interface: content
     target: $SNAP/data-dir/themes
@@ -25,20 +25,9 @@ plugs: # additional plugs to pick up the GTK theme and icons from the system, mo
     interface: content
     target: $SNAP/data-dir/sounds
     default-provider: gtk-common-themes
-  gtk-2-engines:
-    interface: content
-    target: $SNAP/lib/gtk-2.0
-    default-provider: gtk2-common-themes:gtk-2-engines
-  gtk-2-themes:
-    interface: content
-    target: $SNAP/share/themes
-    default-provider: gtk2-common-themes:gtk-2-themes
 
 environment:
-  GTK_PATH: $SNAP/lib/gtk-2.0
-  GTK_DATA_PREFIX: $SNAP
-  XDG_DATA_DIRS: $SNAP/share:$XDG_DATA_DIRS
-  QT_QPA_PLATFORMTHEME: gnome # set default theme to gtk to integrate with system theme (GTK2)
+  QT_QPA_PLATFORMTHEME: gnome # set default theme to gtk to integrate with system theme (GTK3)
 
 apps:
   symphytum:
@@ -46,7 +35,7 @@ apps:
     desktop: usr/share/applications/symphytum.desktop
     environment:
       DISABLE_WAYLAND: 1 # disable wayland (not ready yet), comment out this line to enable full wayland support
-      QT_QPA_PLATFORMTHEME: gtk2 # set default theme to gtk to integrate with system theme (GTK2)
+      QT_QPA_PLATFORMTHEME: gnome # set default theme to gtk to integrate with system theme (GTK3)
     plugs:
       - home
       - network
@@ -90,7 +79,7 @@ parts:
       - qtwayland5
       - zlib1g
       - dbus
-      - qt5-style-plugins # for gtk2 style
+      - qt5-style-plugins
     after: [desktop-qt5]
 
   qgnomeplatform:
@@ -98,22 +87,16 @@ parts:
     plugin: qmake
     qt-version: qt5
     build-packages:
-      - libqt5svg5-dev #??
       - qtbase5-dev
+      - qtbase5-private-dev
       - libgtk-3-dev
+    stage-packages:
+      - libgtk-3-0
     after: [desktop-qt5]
     
   dropbox-sync:
     plugin: python
     python-version: python3
-#    stage-packages: #try this if python-packages (uses PyPi) fails
-#      - python3-setuptools
-#      - python3-six
-#      - python3-certifi
-#      - python3-chardet
-#      - python3-idna
-#      - python3-requests
-#      - python3-urllib3
     python-packages:
       - setuptools
       - six
@@ -150,7 +133,6 @@ parts:
       - qtbase5-dev
       - dpkg-dev
     stage-packages:
-      - qt5-style-plugins # for gtk2 style
       - libxkbcommon0
       - ttf-ubuntu-font-family
       - dmz-cursor-theme
