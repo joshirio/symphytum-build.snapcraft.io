@@ -34,15 +34,13 @@ environment:
   GTK_PATH: $SNAP/lib/gtk-2.0
   GTK_DATA_PREFIX: $SNAP
   XDG_DATA_DIRS: $SNAP/share:$XDG_DATA_DIRS
-  QT_QPA_PLATFORMTHEME: gtk2 # set default theme to gtk to integrate with system theme (GTK2)
 
 apps:
   symphytum:
-    command: desktop-launch symphytum -style gtk2
+    command: desktop-launch symphytum
     desktop: usr/share/applications/symphytum.desktop
     environment:
       DISABLE_WAYLAND: 1 # disable wayland (not ready yet), comment out this line to enable full wayland support
-      QT_QPA_PLATFORMTHEME: gtk2 # set default theme to gtk to integrate with system theme (GTK2)
     plugs:
       - home
       - network
@@ -86,24 +84,6 @@ parts:
       - qtwayland5
       - zlib1g
       - dbus
-      # for gtk2 style
-      - qt5-style-plugins 
-      - libcanberra-gtk-module
-      - libatk-adaptor
-      - libgail-common
-      - gtk2-engines
-      - gtk2-engines-pixbuf
-      - gtk2-engines-murrine
-      - gtk2-engines-aurora
-      - gtk2-engines-equinox
-      - gtk2-engines-nodoka
-      - gtk2-engines-qtcurve
-      - gtk2-engines-blueheart
-      - gtk2-engines-moblin
-      - gtk2-engines-oxygen
-      - gtk2-engines-sugar
-      - gtk2-engines-cleanice
-      - gtk2-engines-xfce
     after: [desktop-qt5]
     
   dropbox-sync:
