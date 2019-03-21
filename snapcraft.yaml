@@ -13,10 +13,6 @@ confinement: strict
 base: core18 # based on ubuntu 18.04 LTS
 
 plugs: # additional plugs to pick up the GTK theme and icons from the system
-  gtk-3-themes: # try for file chooser
-    interface: content
-    target: $SNAP/data-dir/themes
-    default-provider: gtk-common-themes
   icon-themes:
     interface: content
     target: $SNAP/data-dir/icons
@@ -108,7 +104,6 @@ parts:
       - gtk2-engines-sugar
       - gtk2-engines-cleanice
       - gtk2-engines-xfce
-      - libgtk-3-0 # check if needed for file chooser
     after: [desktop-qt5]
     
   dropbox-sync:
