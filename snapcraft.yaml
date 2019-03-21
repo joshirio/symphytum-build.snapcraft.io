@@ -91,6 +91,9 @@ parts:
       - libcanberra-gtk-module
       - libatk-adaptor
       - libgail-common
+      - gtk2-engines
+      - gtk2-engines-pixbuf
+      - gtk2-engines-murrine
     after: [desktop-qt5]
     
   dropbox-sync:
