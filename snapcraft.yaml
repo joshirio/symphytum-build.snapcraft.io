@@ -12,7 +12,7 @@ grade: stable
 confinement: strict
 base: core18 # based on ubuntu 18.04 LTS
 
-plugs: # additional plug to fix mouse cursor theme and use gtk3 file chooser
+plugs: # plugs for theming, font settings, cursor and to use gtk3 file chooser
   gtk-3-themes:
     interface: content
     target: $SNAP/data-dir/themes
@@ -31,8 +31,8 @@ apps:
     adapter: full
     command: bin/symphytum
     command-chain:
-    - bin/desktop-launch
-    - bin/gtk3-env-launch
+      - bin/desktop-launch
+      - bin/gtk3-env-launch
     desktop: usr/share/applications/symphytum.desktop
     environment:
       DISABLE_WAYLAND: 1 # disable wayland (not ready yet), comment out this line to enable full wayland support
@@ -89,9 +89,8 @@ parts:
       - qtwayland5
       - zlib1g
       - dbus
-      # for cursor theme and file chooser fix
+      # for theming, font settings, cursor and to use gtk3 file chooser
       - qt5-gtk-platformtheme 
-      - qt5-style-plugins
     after: [desktop-qt5]
     
   dropbox-sync:
