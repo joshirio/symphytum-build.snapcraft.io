@@ -50,6 +50,14 @@ apps:
       - desktop-legacy
 
 parts:
+  launchers: # custom launcher to set QT_QPA_PLATFORMTHEME=gtk3 correctly
+    source: snap/local/launchers
+    plugin: dump
+    organize:
+      '*': bin/
+    stage:
+      - -bin/README.*
+
   symphytum:
     source: https://github.com/giowck/symphytum.git
     source-tag: v2.5
