@@ -89,7 +89,9 @@ parts:
       - qtwayland5
       - zlib1g
       - dbus
-      - qt5-gtk-platformtheme # for cursor theme and file chooser fix
+      # for cursor theme and file chooser fix
+      - qt5-gtk-platformtheme 
+      - qt5-style-plugins
     after: [desktop-qt5]
     
   dropbox-sync:
