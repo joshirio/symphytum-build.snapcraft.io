@@ -12,31 +12,12 @@ grade: stable
 confinement: strict
 base: core18 # based on ubuntu 18.04 LTS
 
-plugs: # additional plug to fix mouse cursor theme and use gtk3 file chooser
-  gtk-3-themes:
-    interface: content
-    target: $SNAP/data-dir/themes
-    default-provider: gtk-common-themes:gtk-3-themes
-  icon-themes:
-    interface: content
-    target: $SNAP/data-dir/icons
-    default-provider: gtk-common-themes:icon-themes
-  sound-themes:
-    interface: content
-    target: $SNAP/data-dir/sounds
-    default-provider: gtk-common-themes:sounds-themes
-
 apps:
   symphytum:
-    adapter: full
-    command: bin/symphytum
-    command-chain:
-    - bin/desktop-launch
-    - bin/gtk3-env-launch
+    command: desktop-launch symphytum
     desktop: usr/share/applications/symphytum.desktop
     environment:
       DISABLE_WAYLAND: 1 # disable wayland (not ready yet), comment out this line to enable full wayland support
-      #QT_QPA_PLATFORMTHEME: gtk3 # gtk-common-themes support, currently overrided by desktop-launch(`appmenu-qt5`), implement in snap launcher instead
     plugs:
       - home
       - network
@@ -45,19 +26,10 @@ apps:
       - unity7
       - x11
       - wayland
-      - gsettings # allow wayland apps access system theme settings
       - desktop
       - desktop-legacy
 
 parts:
-  launchers: # custom launcher to set QT_QPA_PLATFORMTHEME=gtk3 correctly
-    source: local/launchers
-    plugin: dump
-    organize:
-      '*': bin/
-    stage:
-      - -bin/README.*
-
   symphytum:
     source: https://github.com/giowck/symphytum.git
     source-tag: v2.5
@@ -89,12 +61,19 @@ parts:
       - qtwayland5
       - zlib1g
       - dbus
-      - qt5-gtk-platformtheme # for cursor theme and file chooser fix
     after: [desktop-qt5]
     
   dropbox-sync:
     plugin: python
     python-version: python3
+#    stage-packages: #try this if python-packages (uses PyPi) fails
+#      - python3-setuptools
+#      - python3-six
+#      - python3-certifi
+#      - python3-chardet
+#      - python3-idna
+#      - python3-requests
+#      - python3-urllib3
     python-packages:
       - setuptools
       - six
@@ -143,3 +122,4 @@ parts:
       - libqt5svg5 # for loading icon themes which are svg
       - try: [appmenu-qt5] # not available on core18
       - locales-all
+
