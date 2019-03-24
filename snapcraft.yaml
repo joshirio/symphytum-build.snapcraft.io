@@ -92,7 +92,6 @@ parts:
       # for theming, font settings, cursor and to use gtk3 file chooser
       - qt5-gtk-platformtheme 
       - libcanberra-gtk3-module
-      - libcanberra-gtk-module
     after: [desktop-qt5]
     
   dropbox-sync:
